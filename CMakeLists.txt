@@ -44,9 +44,9 @@ configure_file (
   )
 
 set(OPENDRONE_HEADERS   OpendroneConfig.h ATCommand.h ATCommandFactory.h 
-                        ATSequencer.h Timer.h)
+                        ATSequencer.h Timer.h DatagramSocket.h)
 set(OPENDRONE_SOURCES   ATCommand.cpp ATCommandFactory.cpp ATSequencer.cpp
-                        Timer.cpp)
+                        Timer.cpp DatagramSocket.cpp)
 
 addprefix(OPENDRONE_HEADERS libopendrone/)
 addprefix(OPENDRONE_SOURCES libopendrone/)

@@ -17,44 +17,92 @@
 
 #include <libopendrone/DatagramSocket.h>
 
-DatagramSocket::DatagramSocket(std::string address, uint32_t port)
-    : m_hostAddr(address), m_hostPort(port)
-{
-    /* empty */
-}
-
-DatagramSocket::~DatagramSocket() 
-{
-    if (!m_isConnected)
+namespace opendrone {
+    DatagramSocket::DatagramSocket(std::string address, uint32_t port)
+        : m_hostAddr(address), m_hostPort(port), m_socketFd(0), m_hostInfo(0)
     {
-        // Ensure the socket is closed and the socket is freed
-        Close();
+        /* empty */
     }
-}
 
-bool DatagramSocket::Connect()
-{
+    DatagramSocket::~DatagramSocket() 
+    {
+        if (!m_isConnected)
+        {
+            // Ensure the socket is closed and the socket is freed
+            Close();
+        }
+    }
 
-}
+    bool DatagramSocket::Connect()
+    {
+        addrinfo hints;
+        addrinfo* serverInfo;
+        int ret;
+        int fd;
 
-void DatagramSocket::Close();
+        memset(&hints, 0, sizeof hints);
+        hints.ai_family = AF_UNSPEC;
+        hints.ai_socktype = SOCK_DGRAM;
 
-uint32_t DatagramSocket::Write(const char* buffer, uint32_t length)
-{
+        if ((ret = getaddrinfo(m_hostAddr.c_str(), TypeToString(m_hostPort).c_str(), 
+                                                &hints, &serverInfo)) != 0) {
+            std::cerr << "getaddrinfo failed: " << gai_strerror(ret) << std::endl;
+            return false;
+        }
 
-}
+        // Loop all the results from getaddrinfo until we get a valid connection
+        for (; serverInfo != NULL; serverInfo = serverInfo->ai_next) 
+        {
+            if ((fd = socket(serverInfo->ai_family, serverInfo->ai_socktype,
+                    serverInfo->ai_protocol)) >= 0)
+            {
+                break; // We've got a valid socket
+            }
+        }
 
-uint32_t DatagramSocket::Read(char* buffer, uint32_t length)
-{
+        if (!serverInfo)
+        {
+            std::cerr << "Unable to connect to " << m_hostAddr << ":" << m_hostPort 
+            << std::endl;
+            return false;
+        }
 
-}
+        m_socketFd = fd;
+        m_hostInfo = serverInfo;
+        m_isConnected = true;
+    }
 
-bool DatagramSocket::WriteAll(const char* buffer, uint32_t length)
-{
+    void DatagramSocket::Close()
+    {
+        if (!m_socketFd || !m_hostInfo || !m_isConnected)
+        {
+            std::cerr << "Called Close() on invalid socket" << std::endl;
+            return;
+        }
+        freeaddrinfo(m_hostInfo);
+        close(m_socketFd);
+        m_hostInfo = 0;
+        m_socketFd = 0;
+        m_isConnected = false;
+    }
 
-}
+    uint32_t DatagramSocket::Write(const char* buffer, uint32_t length)
+    {
 
-bool DatagramSocket::ReadAll(char* buffer, uint32_length)
-{
-    
+    }
+
+    uint32_t DatagramSocket::Read(char* buffer, uint32_t length)
+    {
+
+    }
+
+    bool DatagramSocket::WriteAll(const char* buffer, uint32_t length)
+    {
+
+    }
+
+    bool DatagramSocket::ReadAll(char* buffer, uint32_t length)
+    {
+
+    }
 }

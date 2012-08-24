@@ -18,7 +18,25 @@
 #ifndef _DATAGRAM_SOCKET_H
 #define _DATAGRAM_SOCKET_H
 
+#include <libopendrone/OpendroneConfig.h>
+#include <libopendrone/Util.h>
+
 #include <string>
+#include <iostream>
+#include <stdint.h>
+#include <string.h>
+
+#ifdef PLAF_UNIX
+  #include <sys/types.h>
+  #include <sys/socket.h>
+  #include <netinet/in.h>
+  #include <arpa/inet.h>
+  #include <netdb.h>
+#endif
+
+#ifdef PLAF_WIN
+  #include <windows.h>
+#endif
 
 namespace opendrone
 {
@@ -40,6 +58,14 @@ namespace opendrone
          * The post to connect on the host
          */
         uint32_t m_hostPort;
+        /**
+         * The file descriptor of the socket
+         */
+        uint32_t m_socketFd;
+        /**
+         * Since we're using UDP, we need to store the addrinfo struct
+         */
+        addrinfo* m_hostInfo;
     public:
         /**
          * Constructs a datagram object, but doesn't create or connect the
@@ -91,7 +117,7 @@ namespace opendrone
          * \param length The maximum number of bytes to read
          * \return The number of bytes read
          */
-        bool ReadAll(char* buffer, uint32_length);
+        bool ReadAll(char* buffer, uint32_t length);
     };
 }
 
