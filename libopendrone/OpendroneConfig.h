@@ -22,7 +22,7 @@
 #define OPENDRONE_VERSION_MINOR 1
 
 // If available, use poll() over select()
-#define USE_UNIX_POLL 
+#define USE_UNIX_POLL 1
 
 // Platform detection
 #ifdef _WIN32

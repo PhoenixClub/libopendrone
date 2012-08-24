@@ -36,6 +36,7 @@ endmacro(addprefix)
 
 set(OPENDRONE_VERSION_MAJOR 0)
 set(OPENDRONE_VERSION_MINOR 1)
+set(USE_UNIX_POLL 1)
 
 configure_file (
   "${PROJECT_SOURCE_DIR}/libopendrone/OpendroneConfig.h.in"
