@@ -22,6 +22,7 @@ CMake*/
 
 # do not ignore certain files
 !README.*
+!LICENSE
 !CMakeLists.txt
 !Doxyfile
 !.gitignore
