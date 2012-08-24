@@ -25,17 +25,17 @@ set(OPENDRONE_SOURCES ATCommand.cpp ATCommandFactory.cpp ATSequencer.cpp)
 addprefix(OPENDRONE_HEADERS libopendrone/)
 addprefix(OPENDRONE_SOURCES libopendrone/)
 
-source_group(opendrone FILES    ${OPENDRONE_HEADERS} ${OPENDRONE_SOURCES})
+source_group(opendrone FILES ${OPENDRONE_HEADERS} ${OPENDRONE_SOURCES})
 
 set(ODTEST_HEADERS )
 set(ODTEST_SOURCES odtest.cpp)
 
 include_directories("${PROJECT_SOURCE_DIR}")
 
-add_library(opendrone    ${OPENDRONE_SOURCES} ${OPENDRONE_HEADERS})
+add_library(opendrone ${OPENDRONE_SOURCES} ${OPENDRONE_HEADERS})
 
 target_link_libraries(opendrone)
 
-add_executable(odtest   ${ODTEST_SOURCES} ${ODTEST_HEADERS})
+add_executable(odtest ${ODTEST_SOURCES} ${ODTEST_HEADERS})
 
 target_link_libraries(odtest opendrone)

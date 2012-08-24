@@ -1,5 +1,5 @@
-#ifndef ATSEQUENCER_H
-#define ATSEQUENCER_H
+#ifndef _ATSEQUENCER_H
+#define _ATSEQUENCER_H
 
 namespace opendrone
 {
@@ -15,10 +15,17 @@ namespace opendrone
          */
         static int m_nextSeqId;
         
+        /**
+         * Default constructor
+         */
         ATSequencer();
     public:
+        /**
+         * Returns and increments m_nextSeqId
+         * \returns The next sequence id
+         */
         static int GetNextSequenceId();
     };
 }
 
-#endif
+#endif // _ATSEQUENCER_H

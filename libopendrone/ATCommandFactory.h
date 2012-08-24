@@ -1,5 +1,5 @@
-#ifndef AT_COMMAND_FACTORY_H
-#define AT_COMMAND_FACTORY_H
+#ifndef _AT_COMMAND_FACTORY_H
+#define _AT_COMMAND_FACTORY_H
 
 #include <string>
 #include <stdint.h>
@@ -70,4 +70,4 @@ namespace opendrone
     };
 }
 
-#endif
+#endif // _AT_COMMAND_FACTORY_H

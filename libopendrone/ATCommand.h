@@ -1,5 +1,5 @@
-#ifndef ATCOMMAND_H
-#define ATCOMMAND_H
+#ifndef _ATCOMMAND_H
+#define _ATCOMMAND_H
 
 #include <string>
 
@@ -34,4 +34,4 @@ namespace opendrone
     };
 }
 
-#endif  
+#endif // _ATCOMMAND_H

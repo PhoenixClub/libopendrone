@@ -5,6 +5,7 @@
 
 /**
  * Converts a type T to std::string form using the stringstream << operator
+ * \return The value in std::string form
  */
 template <typename T>
 std::string TypeToString(T t)
