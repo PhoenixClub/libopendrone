@@ -1,0 +1,27 @@
+# Thanks to Alex for this more awesome way of ignoring useless stuff
+
+# ignore all files by default
+*
+
+# Do not ignore code directories
+!*/
+
+# Ignore CMake directories (can sometimes contain code)
+CMake*/
+
+# do not ignore all C/++ files
+!*.cpp
+!*.c
+!*.hpp
+!*.h
+!*.in
+
+# do not ignore documentation
+!*.png
+!*.xmi
+
+# do not ignore certain files
+!README.*
+!CMakeLists.txt
+!Doxyfile
+!.gitignore
