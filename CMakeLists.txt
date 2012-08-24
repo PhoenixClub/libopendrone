@@ -37,8 +37,14 @@ endmacro(addprefix)
 set(OPENDRONE_VERSION_MAJOR 0)
 set(OPENDRONE_VERSION_MINOR 1)
 
-set(OPENDRONE_HEADERS ATCommand.h ATCommandFactory.h ATSequencer.h)
-set(OPENDRONE_SOURCES ATCommand.cpp ATCommandFactory.cpp ATSequencer.cpp)
+configure_file (
+  "${PROJECT_SOURCE_DIR}/libopendrone/OpendroneConfig.h.in"
+  "${PROJECT_SOURCE_DIR}/libopendrone/OpendroneConfig.h"
+  )
+
+set(OPENDRONE_HEADERS   OpendroneConfig.h ATCommand.h ATCommandFactory.h 
+                        ATSequencer.h)
+set(OPENDRONE_SOURCES   ATCommand.cpp ATCommandFactory.cpp ATSequencer.cpp)
 
 addprefix(OPENDRONE_HEADERS libopendrone/)
 addprefix(OPENDRONE_SOURCES libopendrone/)
