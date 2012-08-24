@@ -32,6 +32,14 @@ namespace opendrone
          * Is the socket connected (as far as we know)?
          */
         bool m_isConnected;
+        /**
+         * The address of the host
+         */
+        std::string m_hostAddr;
+        /**
+         * The post to connect on the host
+         */
+        uint32_t m_hostPort;
     public:
         /**
          * Constructs a datagram object, but doesn't create or connect the
