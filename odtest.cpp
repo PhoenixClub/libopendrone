@@ -16,6 +16,7 @@
  */
 
 #include <libopendrone/ATCommandFactory.h>
+#include <libopendrone/DatagramSocket.h>
 
 #include <iostream>
 
@@ -34,4 +35,38 @@ int main(int argc, char** argv)
                                 .AddFloat(-0.8f)
                                 .Construct();
     std::cout << cmd.command << std::endl;
+
+    std::cout << "Testing DatagramSocket." << std::endl;
+    // Test by contacting an echo server. Assumes you have one running
+    // at localhost:8888
+    opendrone::DatagramSocket socket("0.0.0.0", 8888);
+    if (!socket.Connect())
+    {
+        return 1;
+    }
+    char writebuf[32];
+    char readbuf[32];
+    strcpy(writebuf, "hello");
+    if (!socket.WriteAll(writebuf, strlen(writebuf)))
+    {
+        std::cerr << "WriteAll failed" << std::endl;
+        socket.Close();
+        return 1;
+    }
+    if (!socket.Read(readbuf, 32)) // Read a max of 32 bytes
+    {
+        std::cerr << "Read failed" << std::endl;
+        socket.Close();
+        return 1;
+    }
+    if (!strcmp(writebuf, readbuf))
+    {
+        std::cout << "Success! The strings are equal: " << writebuf << ", "
+            << readbuf << std::endl;
+    } else {
+        std::cerr << "Failed. The strings are not equal: " << writebuf << ", "
+            << readbuf << std::endl;
+    }
+    socket.Close();
+    return 0;
 }
