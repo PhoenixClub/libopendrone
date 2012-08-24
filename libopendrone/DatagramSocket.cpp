@@ -100,21 +100,59 @@ namespace opendrone {
 
     uint32_t DatagramSocket::Write(const char* buffer, uint32_t length)
     {
-        
+        if (!Valid())
+        {
+            std::cerr << "Called Write() on invalid socket" << std::endl;
+            return -1;
+        }
+        return send(m_socketFd, buffer, length, 0);
     }
 
     uint32_t DatagramSocket::Read(char* buffer, uint32_t length)
     {
-
+        if (!Valid())
+        {
+            std::cerr << "Called Read() on invalid socket" << std::endl;
+            return -1;
+        }
+        return recv(m_socketFd, buffer, length, 0);
     }
 
     bool DatagramSocket::WriteAll(const char* buffer, uint32_t length)
     {
-
+        uint32_t curPos = 0;
+        uint32_t toWrite = length;
+        while (toWrite > 0)
+        {
+            uint32_t written = Write(buffer+curPos, toWrite);
+            if (written == -1)
+            {
+                // error, probably timeout. close and return an error
+                Close();
+                return false;
+            }
+            toWrite -= written;
+            curPos += written;
+        }
+        return true;
     }
 
     bool DatagramSocket::ReadAll(char* buffer, uint32_t length)
     {
-
+        uint32_t curPos = 0;
+        uint32_t toRead = length;
+        while (toRead > 0)
+        {
+            uint32_t read = Read(buffer+curPos, toRead);
+            if (read == -1)
+            {
+                // error, probably timeout. close and return an error
+                Close();
+                return false;
+            }
+            toRead -= read;
+            curPos += read;
+        }
+        return true;
     }
 }
