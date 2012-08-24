@@ -1,5 +1,5 @@
-#ifndef AT_UTIL_H
-#define AT_UTIL_H
+#ifndef _AT_UTIL_H
+#define _AT_UTIL_H
 
 #include <sstream>
 
@@ -15,4 +15,4 @@ std::string TypeToString(T t)
     return ss.str();
 }
 
-#endif
+#endif // _AT_UTIL_H
