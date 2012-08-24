@@ -22,7 +22,7 @@ namespace opendrone
     public:
         /**
          * Returns and increments m_nextSeqId
-         * \returns The next sequence id
+         * \return The next sequence id
          */
         static int GetNextSequenceId();
     };
