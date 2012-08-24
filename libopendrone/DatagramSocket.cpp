@@ -19,7 +19,8 @@
 
 namespace opendrone {
     DatagramSocket::DatagramSocket(std::string address, uint32_t port)
-        : m_hostAddr(address), m_hostPort(port), m_socketFd(0), m_hostInfo(0)
+        : m_hostAddr(address), m_hostPort(port), m_socketFd(0), m_hostInfo(0),
+        m_isConnected(false)
     {
         /* empty */
     }
@@ -58,6 +59,12 @@ namespace opendrone {
             {
                 break; // We've got a valid socket
             }
+            // connect() the fd so that we can use send and recv
+            if (connect(fd, serverInfo->ai_addr, serverInfo->ai_addrlen) != -1)
+            {
+                break;
+            }
+            close(fd);
         }
 
         if (!serverInfo)
@@ -74,7 +81,7 @@ namespace opendrone {
 
     void DatagramSocket::Close()
     {
-        if (!m_socketFd || !m_hostInfo || !m_isConnected)
+        if (!Valid())
         {
             std::cerr << "Called Close() on invalid socket" << std::endl;
             return;
@@ -86,9 +93,14 @@ namespace opendrone {
         m_isConnected = false;
     }
 
+    bool DatagramSocket::Valid()
+    {
+        return (m_socketFd && m_hostInfo && m_isConnected);
+    }
+
     uint32_t DatagramSocket::Write(const char* buffer, uint32_t length)
     {
-
+        
     }
 
     uint32_t DatagramSocket::Read(char* buffer, uint32_t length)

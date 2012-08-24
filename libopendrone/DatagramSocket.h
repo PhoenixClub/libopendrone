@@ -63,7 +63,7 @@ namespace opendrone
          */
         uint32_t m_socketFd;
         /**
-         * Since we're using UDP, we need to store the addrinfo struct
+         * Since we're using UDP, we might need to store the addrinfo struct
          */
         addrinfo* m_hostInfo;
     public:
@@ -85,6 +85,11 @@ namespace opendrone
          * Closes the socket
          */
         void Close();
+        /**
+         * Checks if the socket is valid
+         * \return Whether the socket is valid
+         */
+        bool Valid();
 
         /**
          * Writes a buffer to the socket.
