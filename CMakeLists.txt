@@ -17,6 +17,7 @@
 
 # CMakeLists for libdrone
 cmake_minimum_required(VERSION 2.8)
+project (opendrone)
 
 # prefix each element of list by ${prefix}element
 macro(addprefix list_name prefix)
