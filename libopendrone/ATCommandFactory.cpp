@@ -30,7 +30,7 @@ namespace opendrone
         return *this;
     }
  
-    ATCommandFactory& ATCommandFactory::AddCString(char* str)
+    ATCommandFactory& ATCommandFactory::AddCString(const char* str)
     {
         m_commandBuffer.append(",\"");
         m_commandBuffer.append(str);

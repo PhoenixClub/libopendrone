@@ -48,7 +48,7 @@ namespace opendrone
          * \param str The string to append in char* form
          * \return A reference to this
          */
-        ATCommandFactory& AddCString(char* str);
+        ATCommandFactory& AddCString(const char* str);
         /**
          * Appends a parameter of type int to the command
          * \param i The int to append
